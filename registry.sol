@@ -47,14 +47,14 @@ contract Registry {
     userContracts[msg.sender] = userContract;
     users[registeredUsers] = msg.sender;
     registeredUsers++;
-    makeOptimalMatch();
+    makeOptimalMatch(0);
   }
   
-  uint compareCount;
+  uint comparableCount;
   comparableUser[5] comparableUsers;
   function loadInUser(address _user, uint _idealTime, uint _bribeTime,
                       uint _bribePrice, uint _charity, bytes32 _name) {
-    if(compareCount == MAX_USERS) return; 
+    if(comparableCount == MAX_USERS) return; 
 
     comparableUser u;
     u.user = _user;
@@ -65,13 +65,24 @@ contract Registry {
     u.name = _name;
 
     comparableUsers[compareCount] = u; 
-    compareCount++;
+    comparableCount++;
 
   }
 
-  
-  function makeOptimalMatch() {
-     
+  function makeOptimalMatch(uint index) {
+
+    if(comparableUsers[index].user == msg.sender) {
+      uint sendingUserLoc = index;
+      matchmakerHelper(sendingUserLoc);
+      return;
+    }
+
+    makeOptimalMatch(index++);
+
+  }
+
+  function matchmakerHelper(uint sendingUserLoc) {
+
   }
 
 }
