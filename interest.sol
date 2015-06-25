@@ -35,9 +35,10 @@ contract Interest {
   }
 
   function setNames(address[] matches) {
+    uint index = 0; // THIS SHOULD BE INPUT RECURSIVELY
     if(matches[index] != 0) {
-      address match = matches[index];  
-      matchingParties = match.call("getName");  /* HAHAHAHAHA THIS IS ONLY GONNA RETURN ONE NAME
+      address ratch = matches[index];  
+      matchingParties = ratch.call("getName");  /* HAHAHAHAHA THIS IS ONLY GONNA RETURN ONE NAME
                                                      matchingParties needs to be queried, if I can
                                                      get one name out I'm happy. */
     }
