@@ -1,6 +1,6 @@
 contract Registry {
 
-  bytes32 movieName = "madMax";
+  bytes32 MOVIENAME = "madMax";
   uint MAX_USERS = 100;
   uint registeredUsers;
 
@@ -19,16 +19,16 @@ contract Registry {
                 uint _charity, bytes32 _name) {
 
     userContracts[msg.sender] = User(msg.sender);
-    interesterParties[msg.sender].init(_registry, _idealTime, _bribeTime,
+    userContracts[msg.sender].init(_idealTime, _bribeTime,
                                        _bribePrice, _charity, _name);
     users[registeredUsers] = msg.sender;
     registeredUsers++;
 
   }
 
-  function getMatches() returns (address[]) { // Recursive function to find all matches for an event.
+  function getMatches() returns (address[100]) { // Recursive function to find all matches for an event.
     User userContract = userContracts[msg.sender];
-    checkMatchHelper(msg.sender, users[0], 0, 0);
+    getMatchesHelper(msg.sender, users[0], 0, 0);
     return matchingUsers;
   }
 
@@ -68,7 +68,6 @@ contract User {
 
   address userAddr;
   bytes32 name;
-  address registry; // Registry contract
   uint idealTime;
   uint bribeTime;
   uint bribePrice;
@@ -85,19 +84,18 @@ contract User {
 
     if(msg.sender != userAddr) return;
 
-    registry = _registry;
     idealTime = _idealTime;
     bribeTime = _bribeTime;
     bribePrice = _bribePrice;
     charity = _charity;
     name = _name;
 
-    registry.call("register", address(this));
+    //registry.call("register", address(this));
   }
 
   function getMatches() {
-    address[] matches = registry.call("getMatches");
-    setNames(matches);
+    //address[] matches = registry.call("getMatches");
+    //setNames(matches);
   }
 
   function setNames(address[] matches) {
