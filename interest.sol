@@ -21,5 +21,26 @@ contract Interest {
     charity = charity;
   }
 
+  function getMatches() {
+    /* Call the registry checkMatches function and set some variable (a bytes32?)
+    with the names of matches. */
+  }
+
+  function getIdealTime() {
+    return idealTime;
+  }
+
+  function getBribeTime() {
+    return bribeTime;
+  }
+
+  function getBribePrice() {
+    return bribePrice;
+  }
+
+  function getCharity() {
+    return charity;
+  }
+
 
 }
