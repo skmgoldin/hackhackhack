@@ -14,7 +14,7 @@ contract UserContract {
   function init(uint _idealTime, uint _bribeTime, uint _bribePrice, 
                 uint _charity, bytes32 _name) {
 
-    if(msg.sender != userAddr || msg.value != _charity) return;
+    if(msg.sender != user || msg.value != _charity) return;
 
     idealTime = _idealTime;
     bribeTime = _bribeTime;
