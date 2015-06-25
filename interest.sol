@@ -8,17 +8,20 @@ contract Interest {
   uint bribePrice;
   uint charity;
 
+  bytes32 matchingParties;
+
   function Interest() {
     userAddr = msg.sender;
   }
 
   function init(address registry, uint idealTime, uint bribeTime, uint bribePrice,
-                uint charity) {
+                uint charity, bytes32 name) {
     registry = registry;
     idealTime = idealTime;
     bribeTime = bribeTime;
     bribePrice = bribePrice;
     charity = charity;
+    name = name;
   }
 
   function getMatches() {
