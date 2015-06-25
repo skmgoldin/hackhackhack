@@ -15,8 +15,8 @@ contract Registry {
     registeredUsers = 0;
   }
 
-  function init(address _registry, uint _idealTime, uint _bribeTime,
-                uint _bribePrice, uint _charity, bytes32 _name) {
+  function init(uint _idealTime, uint _bribeTime, uint _bribePrice,
+                uint _charity, bytes32 _name) {
 
     userContracts[msg.sender] = User(msg.sender);
     interesterParties[msg.sender].init(_registry, _idealTime, _bribeTime,
@@ -80,8 +80,8 @@ contract User {
     userAddr = msg.sender;
   }
 
-  function init(address _registry, uint _idealTime, uint _bribeTime,
-                uint _bribePrice, uint _charity, bytes32 _name) {
+  function init(uint _idealTime, uint _bribeTime, uint _bribePrice, 
+                uint _charity, bytes32 _name) {
 
     if(msg.sender != userAddr) return;
 
