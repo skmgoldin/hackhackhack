@@ -26,8 +26,14 @@ contract Interest {
 
   function getMatches() {
     address[] matches = registry.call("getMatches");
-    /* Call the registry checkMatches function and set some variable (a bytes32?)
-    with the names of matches. */
+    setNames(matches);
+  }
+
+  function setNames(address[] matches) {
+    if(matches[index] != 0) {
+      address match = matches[index];  
+      matchingParties = address.call("getName");  // HAHAHAHAHA THIS IS ONLY GONNA RETURN ONE NAME
+    }
   }
 
   function getIdealTime() returns (uint) {
