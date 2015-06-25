@@ -1,13 +1,20 @@
 contract Registry {
 
-  bytes32 MOVIENAME = "madMax";
+  bytes32 MOVIENAME = "MADMAX";
   uint MAX_USERS = 100;
   uint registeredUsers;
 
-  mapping(address => User) userContracts; // Mapping of user addresses to their contracts
-  address[100] users;                      /* This can be iterated through to get the info in
-                                                    the mapping. (user addrs) */
-  address[100] matchingUsers;              // Users who match
+  mapping(address => address) userContracts; // Mapping of user addresses to their contracts
+  address[100] users;                        /* This can be iterated through to call methods
+                                                for all contracts in userContracts */
+
+  /* Query variables for users who match an event wanted by a given address.
+     Make sure to zero these out after use!! */
+  address match0;
+  address match1;
+  address match2;
+  address match3;
+  address match4;
   
 
   /* Constructor */
@@ -15,15 +22,9 @@ contract Registry {
     registeredUsers = 0;
   }
 
-  function init(uint _idealTime, uint _bribeTime, uint _bribePrice,
-                uint _charity, bytes32 _name) {
-
-    userContracts[msg.sender] = User(msg.sender);
-    userContracts[msg.sender].init(_idealTime, _bribeTime,
-                                       _bribePrice, _charity, _name);
-    users[registeredUsers] = msg.sender;
+  function register(address userContract) {
+    userContracts[msg.sender] = userContract;
     registeredUsers++;
-
   }
 
   function getMatches() returns (address[100]) { // Recursive function to find all matches for an event.
@@ -61,5 +62,3 @@ contract Registry {
   }
 
 }
-
-
