@@ -85,7 +85,7 @@
 <h2>Contract address: <input type="text" id="contractAddr" value=""></h2>
 
 <h1>ADD SOME MONEY TO THAT BABY, YEAH!!!!</h1>
-<h2>THE MONEY... <input type=number id=amount value="Wei goes here"</h2>
+<h2>THE MONEY... <input type=number id=amount value="Wei goes here"></h2>
 <button onclick="checkNonce(sendEth)">PUT IN DA MONEY!!!</button>
 
 </body>
