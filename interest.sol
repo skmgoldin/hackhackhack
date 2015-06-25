@@ -14,8 +14,8 @@ contract Interest {
     userAddr = msg.sender;
   }
 
-  function init(address registry, uint idealTime, uint bribeTime, uint bribePrice,
-                uint charity, bytes32 name) {
+  function init(address _registry, uint _idealTime, uint _bribeTime,
+                uint _bribePrice, uint _charity, bytes32 _name) {
     registry = registry;
     idealTime = idealTime;
     bribeTime = bribeTime;
@@ -29,21 +29,20 @@ contract Interest {
     with the names of matches. */
   }
 
-  function getIdealTime() {
+  function getIdealTime() returns (uint) {
     return idealTime;
   }
 
-  function getBribeTime() {
+  function getBribeTime() returns (uint) {
     return bribeTime;
   }
 
-  function getBribePrice() {
+  function getBribePrice() returns (uint) { 
     return bribePrice;
   }
 
-  function getCharity() {
+  function getCharity() returns (uint) {
     return charity;
   }
-
 
 }
