@@ -31,6 +31,14 @@ contract registry {
   }
 
   function checkMatch(address caller, address match) returns (bool) {
+    /* Ideal times match */
+    if(caller.call("getIdealTime") == match.call("getIdealTime")) {
+      return true;
+    }
+
+    /* idealTime-bribeTime overlap LETS JUST TEST IDEAL MATCH FIRST */
+ //   if(caller.call("getIdealTime") == match.call("getBribeTime") ||
+ //      caller.call("getBribeTime") {
       
   }
 

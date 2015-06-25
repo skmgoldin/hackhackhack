@@ -32,7 +32,7 @@ contract Interest {
   function setNames(address[] matches) {
     if(matches[index] != 0) {
       address match = matches[index];  
-      matchingParties = address.call("getName");  /* HAHAHAHAHA THIS IS ONLY GONNA RETURN ONE NAME
+      matchingParties = match.call("getName");  /* HAHAHAHAHA THIS IS ONLY GONNA RETURN ONE NAME
                                                      matchingParties needs to be queried, if I can
                                                      get one name out I'm happy. */
     }
