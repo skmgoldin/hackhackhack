@@ -28,14 +28,20 @@ var faucetCode = "60606040525b33600060006101000a81548173ffffffffffffffffffffffff
 
   });
 
-  function checkNonce() {
+  function checkNonce(callback) {
     var addr = document.getElementById("address").value;
-    var nonce = api.getNonce(addr) ;
+    var nonce = api.getNonce(addr, callback) ;
     publishContract(nonce);
   };
 
+  function checkNonceTx(sendEth) {
+    var addr = document.getElementById("address").value;
+    var nonce = api.getNonce(addr) ;
+    sendEth(nonce);
+  };
+
  
-  function publishContract(nonce) {
+  function publishContract(err, nonce) {
     console.log(nonce);
     var fromAddr = document.getElementById("address").value;
     var txObj = {gaslimit: 30000, nonce: nonce};
@@ -43,17 +49,17 @@ var faucetCode = "60606040525b33600060006101000a81548173ffffffffffffffffffffffff
       document.getElementById("contractAddr").value = contractAddr;
     })
   };
-  $("#publishContract").click(checkNonce);
+  $("#publishContract").click(checkNonce(publishContract));
   
-  $("#sendEth").click(function sendEth(err, nonce) {
+  function sendEth(err, nonce) {
     
     var amount = parseInt(document.getElementById("amount").value);
     var contractAddr = document.getElementById("contractAddr").value;
     var fromAddr = document.getElementById("address").value;
     var txData = {gasLimit:3141592, gasPrice:100, value: amount, nonce: nonce};
     helpers.sendFunctionTx(faucetABI, contractAddr, "fillPool", [], fromAddr, txData, api, keystore, password);
-  });
-
+  };
+  $("#sendEth").click(checkNonceTx);
 
 };
 
