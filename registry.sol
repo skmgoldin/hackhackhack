@@ -15,7 +15,7 @@ contract Registry {
   address userContract3;
   address userContract4;
 
-  struct user {
+  struct comparableUser {
     address user;
     uint idealTime;
     uint bribeTime;
@@ -38,6 +38,7 @@ contract Registry {
   /* Constructor */
   function Registry() {
     registeredUsers = 0;
+    compareCount = 0;
   }
 
   function register(address userContract) {
@@ -48,19 +49,27 @@ contract Registry {
     registeredUsers++;
     makeOptimalMatch();
   }
+  
+  uint compareCount;
+  comparableUser[5] comparableUsers;
+  function loadInUser(address _user, uint _idealTime, uint _bribeTime,
+                      uint _bribePrice, uint _charity, bytes32 _name) {
+    if(compareCount == MAX_USERS) return; 
 
-  function loadInUser(uint _idealTime, uint _bribeTime, uint _bribePrice,
-                      uint _charity, bytes32 _name) {
-    
+    comparableUser u;
+    u.user = _user;
+    u.idealTime = _idealTime;
+    u.bribeTime = _bribeTime;
+    u.bribePrice = _bribePrice;
+    u.charity = _charity;
+    u.name = _name;
+
+    comparableUsers[compareCount] = u; 
+    compareCount++;
+
   }
 
-  /* For comparing. */
-  user user0;
-  user user1;
-  user user2;
-  user user3;
-  user user4;
-
+  
   function makeOptimalMatch() {
      
   }
