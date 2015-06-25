@@ -22,6 +22,8 @@ contract Interest {
     bribePrice = _bribePrice;
     charity = _charity;
     name = _name;
+
+    registry.call("register", address(this));
   }
 
   function getMatches() {

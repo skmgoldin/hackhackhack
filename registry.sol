@@ -18,6 +18,7 @@ contract Registry {
   function register(address contractAddr) {
     interestedParties[msg.sender] = contractAddr;
     users[registeredUsers] = msg.sender;
+    registeredUsers++;
   }
 
   function getMatches() returns (address[]) { // Recursive function to find all matches for an event.
