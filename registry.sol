@@ -38,7 +38,7 @@ contract Registry {
   /* Constructor */
   function Registry() {
     registeredUsers = 0;
-    compareCount = 0;
+    comparableCount = 0;
   }
 
   function register(address userContract) {
@@ -64,7 +64,7 @@ contract Registry {
     u.charity = _charity;
     u.name = _name;
 
-    comparableUsers[compareCount] = u; 
+    comparableUsers[comparableCount] = u; 
     comparableCount++;
 
   }
@@ -73,7 +73,7 @@ contract Registry {
 
     if(comparableUsers[index].user == msg.sender) {
       uint sendingUserLoc = index;
-      matchmakerHelper(sendingUserLoc);
+      matchmakerHelper(sendingUserLoc, 0);
       return;
     }
 
@@ -81,8 +81,31 @@ contract Registry {
 
   }
 
-  function matchmakerHelper(uint sendingUserLoc) {
+  function matchmakerHelper(uint sendingUserLoc, uint index) {
 
+    if(index == comparableCount) return;
+    if(sendingUserLoc == index) {
+      matchmakerHelper(sendingUserLoc, index++);
+      return;
+    }
+
+    comparableUser sendingUser = comparableUsers[sendingUserLoc];
+    comparableUser compareUser = comparableUsers[index];
+
+    if(sendingUser.idealTime == compareUser.idealTime) {
+      addMatch(compareUser.user); 
+    }
+
+    matchmakerHelper(sendingUserLoc, index++);
+    return;
+  }
+
+  function addMatch(address user) {
+    if(match0 == 0) match0 = user;
+    else if(match1 == 0) match1 = user;
+    else if(match2 == 0) match2 = user;
+    else if(match3 == 0) match3 = user;
+    else if(match4 == 0) match4 = user;
   }
 
 }
