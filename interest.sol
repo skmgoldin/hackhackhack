@@ -25,6 +25,7 @@ contract Interest {
   }
 
   function getMatches() {
+    address[] matches = registry.call("getMatches");
     /* Call the registry checkMatches function and set some variable (a bytes32?)
     with the names of matches. */
   }
