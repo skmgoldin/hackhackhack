@@ -4,7 +4,7 @@ contract Registry {
   uint MAX_USERS;
   uint registeredUsers;
 
-  mapping(address => User) interestedParties; // Mapping of user addresses to their contracts
+  mapping(address => User) userContracts; // Mapping of user addresses to their contracts
   address[MAX_USERS] users;                      /* This can be iterated through to get the info in
                                                     the mapping. (user addrs) */
   address[MAX_USERS] matchingUsers;              // Users who match
@@ -18,7 +18,7 @@ contract Registry {
   function init(address _registry, uint _idealTime, uint _bribeTime,
                 uint _bribePrice, uint _charity, bytes32 _name) {
 
-    interestedParties[msg.sender] = User(msg.sender);
+    userContracts[msg.sender] = User(msg.sender);
     interesterParties[msg.sender].init(_registry, _idealTime, _bribeTime,
                                        _bribePrice, _charity, _name);
     users[registeredUsers] = msg.sender;
@@ -26,15 +26,15 @@ contract Registry {
 
   }
 
-
   function getMatches() returns (address[]) { // Recursive function to find all matches for an event.
+    User userContract = userContracts[msg.sender];
     checkMatchHelper(msg.sender, users[0], 0, 0);
     return matchingUsers;
   }
 
   function getMatchesHelper(address caller, address match, uint usersIndex, uint matchIndex) {
 
-    if(checkMatch(caller, interestedParties[match])) {
+    if(checkMatch(caller, userContracts[match])) {
       matchingUsers[matchIndex] = match;
       matchIndex++;
     } 
