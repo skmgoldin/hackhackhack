@@ -1,4 +1,4 @@
-contract registry {
+contract Registry {
 
   bytes32 movieName = madMax;
   uint MAX_USERS;
@@ -8,6 +8,9 @@ contract registry {
                                                     the mapping. (user addrs) */
   address[MAX_USERS] matchingUsers;              // Users who match
   
+
+  /* Constructor */
+  function Registry() {}
 
   function getMatches() returns (address[]) { // Recursive function to find all matches for an event.
     checkMatchHelper(msg.sender, users[0], 0, 0);
