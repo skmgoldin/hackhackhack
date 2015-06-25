@@ -16,6 +16,9 @@ contract Interest {
 
   function init(address _registry, uint _idealTime, uint _bribeTime,
                 uint _bribePrice, uint _charity, bytes32 _name) {
+
+    if(msg.sender != userAddr) return;
+
     registry = _registry;
     idealTime = _idealTime;
     bribeTime = _bribeTime;
