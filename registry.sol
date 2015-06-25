@@ -14,7 +14,7 @@ contract registry {
 
   getMatchesHelper(address caller, address match, uint usersIndex, uint matchIndex) {
 
-    if(checkMatch(caller, match)) {
+    if(checkMatch(caller, interestedParties[match])) {
       matchingUsers[matchIndex] = match;
       matchIndex++;
     } 
@@ -29,7 +29,7 @@ contract registry {
   }
 
   checkMatch(address caller, address match) returns (bool) {
-
+      
   }
 
 
