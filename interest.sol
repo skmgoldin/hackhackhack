@@ -16,12 +16,12 @@ contract Interest {
 
   function init(address _registry, uint _idealTime, uint _bribeTime,
                 uint _bribePrice, uint _charity, bytes32 _name) {
-    registry = registry;
-    idealTime = idealTime;
-    bribeTime = bribeTime;
-    bribePrice = bribePrice;
-    charity = charity;
-    name = name;
+    registry = _registry;
+    idealTime = _idealTime;
+    bribeTime = _bribeTime;
+    bribePrice = _bribePrice;
+    charity = _charity;
+    name = _name;
   }
 
   function getMatches() {
