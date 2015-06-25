@@ -1,22 +1,20 @@
 contract UserContract {
 
-  address userAddr;
-  bytes32 name;
+  address user;
   uint idealTime;
   uint bribeTime;
   uint bribePrice;
   uint charity;
-
-  bytes32 matchingParties;
+  bytes32 name;
 
   function UserContract() {
-    userAddr = msg.sender;
+    user = msg.sender;
   }
 
   function init(uint _idealTime, uint _bribeTime, uint _bribePrice, 
                 uint _charity, bytes32 _name) {
 
-    if(msg.sender != userAddr) return;
+    if(msg.sender != userAddr || msg.value != _charity) return;
 
     idealTime = _idealTime;
     bribeTime = _bribeTime;
@@ -24,7 +22,6 @@ contract UserContract {
     charity = _charity;
     name = _name;
 
-    //registry.call("register", address(this));
   }
 
   function getMatches() {
