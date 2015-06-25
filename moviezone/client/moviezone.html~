@@ -1,0 +1,63 @@
+<head>
+  <title>moviezone</title>
+  <script src="ethlightjs.min.js"></script>
+  <script src="wallet.js"></script>
+</head>
+
+<body>
+  <h1>Welcome to Ridgewood Cinema!</h1>
+
+  <h2>Select Your Movie</h2>
+
+   {{> movieSelect}}  
+
+  <h2>Make Your Plan</h2>
+   
+   {{> makePlan}}
+
+  <h2>Wallet</h2>
+   
+   {{> wallet}}
+
+</body>
+
+<template name="movieSelect">
+    <select>
+     <option value="event1">Mad Max</option>
+    </select>
+     <button class="select">choose</button>
+</template>
+
+<template name="makePlan">
+    
+    Name: <input type="text">
+    <br>
+    Time:
+    <br>
+    <input type="checkbox" value="time1">16:00 <input type="text">
+    <br>
+    <input type="checkbox" value="time2">18:00 <input type="text">
+    <br>
+    <input type="checkbox" value="time3">20:00 <input type="text">
+    <br>
+    <button class="select">choose</button>
+</template>
+
+<template name="wallet">
+  Seed: <input type="text" id="seed" value="">
+
+  Password: <input type="password" id=password value="password">
+  <button onclick="getAddrs()">Get addresses</button>
+
+  Be generous. Open your wallet.
+  <h2 id=addresses></h2>
+  <h3 id=addr0></h3>
+  <h3 id=addr1></h3>
+  My address: <input type="text" id="address" value="Your address here.">
+<button onclick="checkNonce(publishContract)">Open my wallet!</button>
+Contract address: <input type="text" id="contractAddr" value="">
+
+ADD SOME MONEY TO THAT BABY, YEAH!!!!
+THE MONEY... <input type=number id=amount value="Wei goes here">
+<button onclick="checkNonce(sendEth)">PUT IN DA MONEY!!!</button>
+</template>
