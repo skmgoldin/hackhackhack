@@ -8,6 +8,13 @@ contract Registry {
   address[5] users;                          /* This can be iterated through to call methods
                                                 for all contracts in userContracts */
 
+  /* BA query variables for getting user contract data for loadInUser(...) */
+  address userContract0;
+  address userContract1;
+  address userContract2;
+  address userContract3;
+  address userContract4;
+
   struct user {
     address user;
     uint idealTime;
@@ -17,13 +24,8 @@ contract Registry {
     bytes32 name;
   }
 
-  user user0;
-  user user1;
-  user user2;
-  user user3;
-  user user4;
 
-  /* Query variables for users who match an event wanted by a given address.
+  /* BA query variables for users who match an event wanted by a given address.
      Make sure to zero these out after use!! */
   address match0;
   address match1;
@@ -51,6 +53,13 @@ contract Registry {
                       uint _charity, bytes32 _name) {
     
   }
+
+  /* For comparing. */
+  user user0;
+  user user1;
+  user user2;
+  user user3;
+  user user4;
 
   function makeOptimalMatch() {
      
