@@ -25,40 +25,11 @@ contract Registry {
   function register(address userContract) {
     userContracts[msg.sender] = userContract;
     registeredUsers++;
+    makeOptimalMatch();
   }
 
-  function getMatches() returns (address[100]) { // Recursive function to find all matches for an event.
-    User userContract = userContracts[msg.sender];
-    getMatchesHelper(msg.sender, users[0], 0, 0);
-    return matchingUsers;
-  }
-
-  function getMatchesHelper(address caller, address ratch, uint usersIndex, uint matchIndex) {
-
-    if(checkMatch(caller, userContracts[ratch])) {
-      matchingUsers[matchIndex] = ratch;
-      matchIndex++;
-    } 
-
-    usersIndex++;
-    if(usersIndex > MAX_USERS) {
-      return;
-    } else {
-      getMatchesHelper(caller, users[usersIndex], usersIndex, matchIndex);
-    }
-
-  }
-
-  function checkMatch(address caller, address ratch) returns (bool) {
-    /* Ideal times match */
-    if(caller.call("getIdealTime") == ratch.call("getIdealTime")) {
-      return true;
-    }
-
-    /* idealTime-bribeTime overlap LETS JUST TEST IDEAL MATCH FIRST */
- //   if(caller.call("getIdealTime") == match.call("getBribeTime") ||
- //      caller.call("getBribeTime") {
-      
+  function makeOptimalMatch() {
+     
   }
 
 }
