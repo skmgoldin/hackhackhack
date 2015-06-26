@@ -53,6 +53,11 @@ contract Registry {
   function register(address userContract) {
     if(registeredUsers == MAX_USERS) return;
 
+    if(userContracts[msg.sender] != 0) {
+      userContracts[msg.sender] = userContract;
+      return;
+    }
+
     userContracts[msg.sender] = userContract;
     users[registeredUsers] = msg.sender;
     registeredUsers++;
