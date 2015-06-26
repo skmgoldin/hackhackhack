@@ -3,6 +3,14 @@ contract Registry {
   bytes32 MOVIENAME;
   uint MAX_USERS;
   uint registeredUsers;
+  address returnTestOne;
+  address returnTestTwo;
+
+  function testReturn() {
+    address user = users[0];
+    returnTestOne = user;
+    returnTestTwo = userContracts[user];
+  }
 
   mapping(address => address) userContracts; // Mapping of user addresses to their contracts
   address[5] users;                          /* This can be iterated through to call methods

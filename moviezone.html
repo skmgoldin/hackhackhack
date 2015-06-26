@@ -10,7 +10,7 @@
   var helpers = ethlightjs.helpers;
   var password;
   var seed;
-  var registryAddr = "3443920ade9ea0ac6343c106e7c2a4ba0b45bc9b"; 
+  var registryAddr = "6a3780b05cda96d559b38ec40ccf055ed1a3b6a0"; 
   var nonce;
 
   function testChooseAddr(){
@@ -76,7 +76,7 @@
   } */
 
   function registerUserContract() {
-    nonce++;
+    //nonce++;
     var contractAddr = registryAddr;
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
