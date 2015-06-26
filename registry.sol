@@ -34,7 +34,6 @@ contract Registry {
   address match4;
   uint matchTime;
   
-
   /* Constructor */
   function Registry() {
     registeredUsers = 0;
@@ -47,7 +46,7 @@ contract Registry {
     userContracts[msg.sender] = userContract;
     users[registeredUsers] = msg.sender;
     registeredUsers++;
-    makeOptimalMatch(0);
+//    makeOptimalMatch(0);
   }
   
   uint comparableCount;
