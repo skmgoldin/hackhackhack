@@ -1,7 +1,7 @@
 contract Registry {
 
-  bytes32 MOVIENAME = "MADMAX";
-  uint MAX_USERS = 5;
+  bytes32 MOVIENAME;
+  uint MAX_USERS;
   uint registeredUsers;
 
   mapping(address => address) userContracts; // Mapping of user addresses to their contracts
@@ -36,6 +36,8 @@ contract Registry {
   
   /* Constructor */
   function Registry() {
+    MOVIENAME = "madmax";
+    MAX_USERS = 5;
     registeredUsers = 0;
     comparableCount = 0;
   }
