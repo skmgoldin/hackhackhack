@@ -15,7 +15,8 @@
   function testChoose(){
     var addr= document.getElementById(document.querySelector('input[name="addr"]:checked').value).value;
     document.getElementById("address").value = addr;
-    }
+  }
+
   function getAddrs() {
     seed = document.getElementById("seed").value;
     password = document.getElementById("password").value;
@@ -55,7 +56,9 @@
   }
 
   /* THIS WILL BE WHAT HAPPENS WHEN A USER JOINS THE POOL */
-  checkNonce(pushUserContract(nonce, checkNonce(registerUserContract(nonce, checkNonce(initUserContract)))));
+  function joinPool() {
+    checkNonce(pushUserContract(nonce, checkNonce(registerUserContract(nonce, checkNonce(initUserContract)))));
+  }
 
   function registerUserContract(nonce, callback) {
     var contractAddr = registryAddr;
