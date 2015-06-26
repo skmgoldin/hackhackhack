@@ -73,6 +73,7 @@
     var contractAddr = document.getElementById("userContractAddr").value;
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
+    var name = document.getElementById("name").value;
     var args = [idealTime, bribeTime, bribePrice, charity, name]
     helpers.sendFunctionTx(registryABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, undefined);
   }
