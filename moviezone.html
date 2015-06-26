@@ -12,6 +12,7 @@
   var password;
   var seed;
 
+  // TODO: Generic, flexible getAddrs() that lists ALL addresses per seed.
   function getAddrs() {
     seed = document.getElementById("seed").value;
     password = document.getElementById("password").value;
@@ -34,8 +35,14 @@
     var nonce = api.getNonce(addr, callback);
   }
 
+  function pushUserContract(err, nonce) {
+    var fromAddr = document.getElementById("address").value;
+    var txObj = {gaslimit: 30000, nonce: nonce};
+    var callback = function(err, undefined) {}
+    helpers.sendCreateContractTx(userContractCode, fromAddr, txObj, api, keystore, password, callback) 
+  }
+
   function publishContract(err, nonce) {
-    console.log(nonce);
     var fromAddr = document.getElementById("address").value;
     var txObj = {gaslimit: 30000, nonce: nonce};
     helpers.sendCreateContractTx(faucetCode, fromAddr, txObj, api, keystore, password, function(err, contractAddr) {
@@ -44,7 +51,6 @@
   }
 
   function sendEth(err, nonce) {
-    console.log(nonce);
     var amount = parseInt(document.getElementById("amount").value);
     var contractAddr = document.getElementById("contractAddr").value;
     var fromAddr = document.getElementById("address").value;
