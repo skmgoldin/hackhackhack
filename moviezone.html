@@ -71,17 +71,17 @@
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
     var args = [parseInt(document.getElementById("userContractAddr").value, 16)]
-      helpers.sendFunctionTx(registryABI, contractAddr, "register", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+    helpers.sendFunctionTx(registryABI, contractAddr, "register", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
   function initUserContract() {
     var contractAddr = document.getElementById("userContractAddr").value;
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
-    var iTime = document.getElementById("iTime").value;
-    var bTime = document.getElementById("bTime").value;
-    var bribePrice = document.getElementById("t").value;
-    var charity = document.getElementById("c").value;
+    var iTime = parseInt(document.getElementById("iTime").value);
+    var bTime = parseInt(document.getElementById("bTime").value);
+    var bribePrice = parseInt(document.getElementById("t").value);
+    var charity = parseInt(document.getElementById("c").value);
     var name = document.getElementById("name").value;
     var args = [iTime, bTime, bribePrice, charity, name]
       helpers.sendFunctionTx(userContractABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
