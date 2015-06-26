@@ -11,10 +11,11 @@
   var password;
   var seed;
   var registryAddr; // THIS SHOULD BE HARDCODED...?
+  var nonce;
 
   function testChoose(){
     var addr= document.getElementById(document.querySelector('input[name="addr"]:checked').value).value;
-    document.getElementById("address").value = addr;
+    document.getElementById("userAddr").value = addr;
   }
 
   function getAddrs() {
@@ -42,7 +43,7 @@
 
   function checkNonce(callback) {
     var userAddr = document.getElementById("userAddr").value;
-    var nonce = api.getNonce(userAddr, callback);
+    nonce = api.getNonce(userAddr, callback);
   }
 
   function pushUserContract(nonce, callback) {
@@ -57,7 +58,13 @@
 
   /* THIS WILL BE WHAT HAPPENS WHEN A USER JOINS THE POOL */
   function joinPool() {
-    checkNonce(pushUserContract(nonce, checkNonce(registerUserContract(nonce, checkNonce(initUserContract)))));
+    checkNonce(function(error, nonce) { 
+      pushUserContract(nonce, checkNonce(function(error, nonce) { 
+        registerUserContract(nonce, checkNonce(function(error, nonce) {
+          initUserContract;
+        }));
+      }));
+    });
   }
 
   function registerUserContract(nonce, callback) {
@@ -106,7 +113,7 @@
 <input type=radio name="addr" value="addr2" onclick="testChoose()"><h3 id=addr2></h3><br>
 
 <h2>Name: <input type="text" id="name" value=""></h2>
-<h2>My address: <input type="text" id="address" value=""></h2>
+<h2>My address: <input type="text" id="userAddr" value=""></h2>
 <br>
 <h2>Best    Time  
 <br>
@@ -122,16 +129,10 @@
 <h2>Charity:</h2>
 <input id='c' type="text" value="0">
 <br>
-<button class="select">choose</button>
+<button onclick="joinPool()" class="select">choose</button>
 
 
-<h1>Be generous. Open your wallet.</h1>
+<h2>Contract address: <input type="text" id="userContractAddr" value=""></h2>
 
-<button onclick="checkNonce(publishContract)">Open my wallet!</button>
-<h2>Contract address: <input type="text" id="contractAddr" value=""></h2>
-
-<h1>ADD SOME MONEY TO THAT BABY, YEAH!!!!</h1>
-<h2>THE MONEY... <input type=number id=amount value="Wei goes here"></h2>
-<button onclick="checkNonce(sendEth)">PUT IN DA MONEY!!!</button>
 
 </html>
