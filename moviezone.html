@@ -13,10 +13,21 @@
   var registryAddr; // THIS SHOULD BE HARDCODED...?
   var nonce;
 
-  function testChoose(){
+  function testChooseAddr(){
     var addr= document.getElementById(document.querySelector('input[name="addr"]:checked').value).value;
     document.getElementById("userAddr").value = addr;
   }
+
+  function testChooseiTime(){
+    var iTime = document.getElementById(document.querySelector('input[name="best"]:checked').value).value;
+    document.getElementById("iTime").value = iTime;
+  }
+
+  function testChoosebTime(){
+    var bTime = document.getElementById(document.querySelector('input[name="tip"]:checked').value).value;
+    document.getElementById("bTime").value = bTime;
+  }
+
 
   function getAddrs() {
     seed = document.getElementById("seed").value;
@@ -43,46 +54,48 @@
 
   function checkNonce(callback) {
     var userAddr = document.getElementById("userAddr").value;
-    nonce = api.getNonce(userAddr, callback);
+    api.getNonce(userAddr, callback);
   }
 
-  function pushUserContract(nonce, callback) {
+  function pushUserContract() {
     var fromAddr = document.getElementById("userAddr").value;
     var txObj = {gaslimit: 30000, nonce: nonce};
     helpers.sendCreateContractTx(userContractCode, fromAddr, txObj, api,
                                  keystore, password, function(err, contractAddr) {
       document.getElementById("userContractAddr").value = contractAddr; 
     });
-    callback;
   }
 
-  /* THIS WILL BE WHAT HAPPENS WHEN A USER JOINS THE POOL */
+  /* THIS WILL BE WHAT HAPPENS WHEN A USER JOINS THE POOL 
   function joinPool() {
     checkNonce(function(error, nonce) { 
-      pushUserContract(nonce, checkNonce(function(error, nonce) { 
-        registerUserContract(nonce, checkNonce(function(error, nonce) {
+      pushUserContract(nonce, registerUserContract(nonce++, function() { 
           initUserContract;
         }));
-      }));
-    });
-  }
+      });
+  } */
 
-  function registerUserContract(nonce, callback) {
+  function registerUserContract() {
+    nonce++;
     var contractAddr = registryAddr;
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
-    var args = [document.getElementById("userContractAddr").value]
-    helpers.sendFunctionTx(registryABI, contractAddr, "register", args, fromAddr, txData, api, keystore, password, undefined);
-    callback;
+    var args = [parseInt(document.getElementById("userContractAddr").value, 16)]
+      helpers.sendFunctionTx(registryABI, contractAddr, "register", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
-  function initUserContract(nonce, idealTime, bribeTime, bribePrice, charity, name) {
+  function initUserContract() {
+    nonce++;
     var contractAddr = document.getElementById("userContractAddr").value;
     var fromAddr = document.getElementById("userAddr").value;
     var txData = {nonce: nonce};
+    var iTime = document.getElementById("iTime").value;
+    var bTime = document.getElementById("bTime").value;
+    var bribePrice = document.getElementById("t").value;
+    var charity = document.getElementById("c").value;
     var name = document.getElementById("name").value;
-    var args = [idealTime, bribeTime, bribePrice, charity, name]
-    helpers.sendFunctionTx(registryABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, undefined);
+    var args = [iTime, bTime, bribePrice, charity, name]
+      helpers.sendFunctionTx(userContractABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
 
@@ -108,20 +121,20 @@
   
 <h2>Your addresses:</h2>
 <h2 id=addresses></h2>
-<input type=radio name="addr" value="addr0" onclick="testChoose()"><h3 id=addr0></h3><br>
-<input type=radio name="addr" value="addr1" onclick="testChoose()"><h3 id=addr1></h3><br>
-<input type=radio name="addr" value="addr2" onclick="testChoose()"><h3 id=addr2></h3><br>
+<input type=radio name="addr" value="addr0" onclick="testChooseAddr()"><h3 id=addr0></h3><br>
+<input type=radio name="addr" value="addr1" onclick="testChooseAddr()"><h3 id=addr1></h3><br>
+<input type=radio name="addr" value="addr2" onclick="testChooseAddr()"><h3 id=addr2></h3><br>
 
 <h2>Name: <input type="text" id="name" value=""></h2>
 <h2>My address: <input type="text" id="userAddr" value=""></h2>
 <br>
 <h2>Best    Time  
 <br>
-<input type="radio" name="best" value="1"><input type="radio" name="tip" value="1">16:00 
+<input type="radio" name="best" value="1" onclick="testChooseiTime"><input type="radio" name="tip" value="1" onclick="testChoosebTime">16:00 
 <br>
-<input type="radio" name="best" value="2"><input type="radio" name="tip" value="2">18:00 
+<input type="radio" name="best" value="2" onclick="testChooseiTime"><input type="radio" name="tip" value="2" onclick="testChoosebTime">18:00 
 <br>
-<input type="radio" name="best" value="3"><input type="radio" name="tip" value="3">20:00 
+<input type="radio" name="best" value="3" onclick="testChooseiTime"><input type="radio" name="tip" value="3" onclick="testChoosebTime">20:00 
 <br>
 <h2>Tip	</h2>
 <input id='t' type="text" value="0">
@@ -129,10 +142,15 @@
 <h2>Charity:</h2>
 <input id='c' type="text" value="0">
 <br>
-<button onclick="joinPool()" class="select">choose</button>
+<button onclick="checkNonce(function(err, _nonce){nonce = _nonce})" class="select">Step 0</button>
+<button onclick="pushUserContract()" class="select">Step 1</button>
+<button onclick="registerUserContract()" class="select">Step 2</button>
+<button onclick="initUserContract()" class="select">Step 3</button>
 
 
 <h2>Contract address: <input type="text" id="userContractAddr" value=""></h2>
+<h2>Contract address: <input type="text" id="iTime" value="1"></h2>
+<h2>Contract address: <input type="text" id="bTime" value="2"></h2>
 
 
 </html>
