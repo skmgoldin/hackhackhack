@@ -69,18 +69,6 @@
 <h3 id=addr0></h3>
 <h3 id=addr1></h3>
 
-<h2>Name: <input type="text"></h2>
-<br>
-<h2>Time  	Tip	Charity:</h2>
-<br>
-<input type="checkbox" id ='t1' value="time1">16:00 <input id = 'tip1' type="text" value="0"><input id = 'char1' type="text" value="0">
-<br>
-<input type="checkbox" id ='t2' value="time2">18:00 <input id = 'tip2' type="text" value="0"><input id = 'char2' type="text" value="0">
-<br>
-<input type="checkbox" id ='t3' value="time3">20:00 <input id = 'tip3' type="text" value="0"><input id = 'char3' type="text" value="0">
-<br>
-<button class="select">choose</button>
-
 
 <h1>Be generous. Open your wallet.</h1>
 
