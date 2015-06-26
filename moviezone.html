@@ -10,7 +10,7 @@
   var helpers = ethlightjs.helpers;
   var password;
   var seed;
-  var registryAddr = "6e322c26237d791c52baa51fd925b6d9c298cd6e"; 
+  var registryAddr = "0f6a7a6d5d41c681f1154ece75c61530484423a9"; 
   var nonce;
 
   function testChooseAddr(){
@@ -83,7 +83,7 @@
     var bribePrice = parseInt(document.getElementById("t").value);
     var charity = parseInt(document.getElementById("c").value);
     var name = document.getElementById("name").value;
-    var args = [iTime, bTime, bribePrice, charity, name]
+    var args = [iTime, bTime, bribePrice, charity]
       helpers.sendFunctionTx(userContractABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
@@ -93,13 +93,18 @@
     helpers.sendFunctionTx(registryABI, registryAddr, "testReturn", [], fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
-  var userContractCode =
- "60606040525b33600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908302179055505b60fe8061003f6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900480630eb7a276146037576035565b005b605e6004803590602001803590602001803590602001803590602001803590602001506060565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614158060bc5750813414155b1560c45760f7565b84600160005081905550836002600050819055508260036000508190555081600460005081905550806005600050819055505b505050505056"
+  function loadUpUsers() {
+    var fromAddr = document.getElementById("userAddr").value;
+    var txData = {nonce: nonce};
+    helpers.sendFunctionTx(registryABI, registryAddr, "loadUpUsers", [], fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+  }
+
+  var userContractCode = "60606040525b33600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908302179055505b60e38061003f6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900480637662850d146037576035565b005b6058600480359060200180359060200180359060200180359060200150605a565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151560b45760dd565b836001600050819055508260026000508190555081600360005081905550806004600050819055505b5050505056"
 
  var registryABI = [{"constant":false,"inputs":[{"name":"userContract","type":"address"}],"name":"register","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"sendingUserLoc","type":"uint256"},{"name":"index","type":"uint256"}],"name":"matchmakerHelper","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_user","type":"address"},{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"},{"name":"_name","type":"bytes32"}],"name":"loadInUser","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"makeOptimalMatch","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"testReturn","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"user","type":"address"}],"name":"addMatch","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
 
 
-  var userContractABI = [{"constant":false,"inputs":[{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"},{"name":"_name","type":"bytes32"}],"name":"init","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
+ var userContractABI = [{"constant":false,"inputs":[{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"}],"name":"init","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
 
 </script>
 </head>
@@ -139,6 +144,7 @@ Ideal &nbsp; Bribe &nbsp;  Time
 <button onclick="pushUserContract()" class="select">userContract</button>
 <button onclick="registerUserContract()" class="select">register user</button>
 <button onclick="initUserContract()" class="select">init user</button>
+<button onclick="loadUpUsers()" class="select">loadUpUsers</button>
 
 
 <h2>Contract address: <input type="text" id="userContractAddr" value=""></h2>

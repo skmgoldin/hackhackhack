@@ -64,10 +64,37 @@ contract Registry {
 //    makeOptimalMatch(0);
   }
   
+  function loadUpUsers() {
+    uint i = 0;
+    address user;
+
+    while(i < registeredUsers) {
+      address _user;
+      _user = users[i];
+      user = userContracts[_user];
+    
+
+      if(i = 0) {
+        match0 = user; 
+      } else if(i = 1) {
+        match1 = user;
+      } else if(i = 2) {
+        match2 = user;
+      } else if(i = 3) {
+        match3 = user;
+      } else if(i = 4) {
+        match4 = user;
+      }
+
+      i++;
+    }
+      
+  }
+
   uint comparableCount;
   comparableUser[5] comparableUsers;
   function loadInUser(address _user, uint _idealTime, uint _bribeTime,
-                      uint _bribePrice, uint _charity, bytes32 _name) {
+                      uint _bribePrice, uint _charity) {
     if(comparableCount == MAX_USERS) return; 
 
     comparableUser u;
@@ -76,7 +103,7 @@ contract Registry {
     u.bribeTime = _bribeTime;
     u.bribePrice = _bribePrice;
     u.charity = _charity;
-    u.name = _name;
+    //u.name = _name;
 
     comparableUsers[comparableCount] = u; 
     comparableCount++;
