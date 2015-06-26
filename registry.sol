@@ -74,15 +74,15 @@ contract Registry {
       user = userContracts[_user];
     
 
-      if(i = 0) {
+      if(i == 0) {
         match0 = user; 
-      } else if(i = 1) {
+      } else if(i == 1) {
         match1 = user;
-      } else if(i = 2) {
+      } else if(i == 2) {
         match2 = user;
-      } else if(i = 3) {
+      } else if(i == 3) {
         match3 = user;
-      } else if(i = 4) {
+      } else if(i == 4) {
         match4 = user;
       }
 
