@@ -2,6 +2,7 @@
 
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="moviezone.css">
 <script src="ethlightjs.min.js"></script>
 <script>
 
@@ -103,32 +104,55 @@
 
 </script>
 </head>
-
-<h1>This is Moviezone.</h1>
-
+<body>
+<center>
+<h1 >This is Moviezone.</h1>
+<h2 >Generate Your addresses</h2>
 <h2>Seed: <input type="text" id="seed" value="vocal cradle afford addict expose toe suggest illness eager vote satisfy latin"></h2>
 <h2>Password: <input type="password" id=password value="password"></h2>
 <button onclick="getAddrs()">Get addresses</button>
   
 <h2>Choose Your addresses:</h2>
 <h2 id=addresses></h2>
-<input type=radio name="addr" value="addr0" onclick="testChooseAddr()"><h3 id=addr0></h3><br>
-<input type=radio name="addr" value="addr1" onclick="testChooseAddr()"><h3 id=addr1></h3><br>
-<input type=radio name="addr" value="addr2" onclick="testChooseAddr()"><h3 id=addr2></h3><br>
-
-<h2>Name: <input type="text" id="name" value=""></h2>
+<table>
+<tr>
+<td><input type=radio name="addr" value="addr0" onclick="testChooseAddr()"></td>
+<td><label id=addr0></label></td>
+</tr>
+<tr>
+<td><input type=radio name="addr" value="addr1" onclick="testChooseAddr()"></td>
+<td><label id=addr1></label></td>
+</tr>
+<tr>
+<td><input type=radio name="addr" value="addr2" onclick="testChooseAddr()"></td>
+<td><label id=addr2></label></td>
+</tr>
+</table>
 <h2>Your address: <input type="text" id="userAddr" value=""></h2>
 <br>
 
 <h2>Choose Your Time:</h2>
-Ideal &nbsp; Bribe &nbsp;  Time  
-<br>
-<input type="radio" name="best" value="1" onclick="testChooseiTime"> &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="tip" value="1" onclick="testChoosebTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;16:00 
-<br>
-<input type="radio" name="best" value="2" onclick="testChooseiTime"> &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="tip" value="2" onclick="testChoosebTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18:00 
-<br>
-<input type="radio" name="best" value="3" onclick="testChooseiTime"> &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="tip" value="3" onclick="testChoosebTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20:00 
-<br>
+<table>
+<tr>
+<td>Ideal</td> <td>Bribe</td> <td>Timeslot</td>  
+</tr>
+<tr>
+<td><input type="radio" name="best" value="1" onclick="testChooseiTime"> </td>
+<td><input type="radio" name="tip" value="1" onclick="testChoosebTime"></td>
+<td><label>16:00</label></td> 
+</tr>
+<tr>
+<td><input type="radio" name="best" value="2" onclick="testChooseiTime"></td>
+<td><input type="radio" name="tip" value="2" onclick="testChoosebTime"></td>
+<td><label>18:00</label></td> 
+</tr>
+<tr>
+<td><input type="radio" name="best" value="3" onclick="testChooseiTime"></td>
+<td><input type="radio" name="tip" value="3" onclick="testChoosebTime"></td>
+<td><label>20:00</label></td> 
+</tr>
+</table>
+
 <h2>Tip:</h2>
 <input id='t' type="text" value="0">
 <br>
@@ -142,8 +166,6 @@ Ideal &nbsp; Bribe &nbsp;  Time
 
 
 <h2>Contract address: <input type="text" id="userContractAddr" value=""></h2>
-<h2>Contract address: <input type="text" id="iTime" value="1"></h2>
-<h2>Contract address: <input type="text" id="bTime" value="2"></h2>
-
-
+</center>
+</body>
 </html>
