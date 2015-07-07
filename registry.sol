@@ -24,12 +24,11 @@ contract Registry {
   address userContract4;
 
   struct comparableUser {
-    address user;
     uint idealTime;
     uint bribeTime;
     uint bribePrice;
     uint charity;
-    bytes32 name;
+    //bytes32 name;
   }
 
 
@@ -48,10 +47,16 @@ contract Registry {
     MAX_USERS = 5;
     registeredUsers = 0;
     comparableCount = 0;
+    totalMatches = 0;
   }
 
   function register(address userContract) {
     if(registeredUsers == MAX_USERS) return;
+
+    if(userContracts[msg.sender] != 0) {
+      userContracts[msg.sender] = userContract;
+      return;
+    }
 
     userContracts[msg.sender] = userContract;
     users[registeredUsers] = msg.sender;
@@ -59,53 +64,78 @@ contract Registry {
 //    makeOptimalMatch(0);
   }
   
+  function loadUpUsers() {
+    uint i = 0;
+    address user;
+
+    while(i < registeredUsers) {
+      address _user;
+      _user = users[i];
+      user = userContracts[_user];
+    
+
+      if(i == 0) {
+        match0 = user; 
+      } else if(i == 1) {
+        match1 = user;
+      } else if(i == 2) {
+        match2 = user;
+      } else if(i == 3) {
+        match3 = user;
+      } else if(i == 4) {
+        match4 = user;
+      }
+
+      i++;
+    }
+      
+  }
+
   uint comparableCount;
   comparableUser[5] comparableUsers;
-  function loadInUser(address _user, uint _idealTime, uint _bribeTime,
-                      uint _bribePrice, uint _charity, bytes32 _name) {
+  function loadInUser(uint _idealTime, uint _bribeTime, uint _bribePrice,
+                      uint _charity) {
     if(comparableCount == MAX_USERS) return; 
 
     comparableUser u;
-    u.user = _user;
     u.idealTime = _idealTime;
     u.bribeTime = _bribeTime;
     u.bribePrice = _bribePrice;
     u.charity = _charity;
-    u.name = _name;
 
     comparableUsers[comparableCount] = u; 
     comparableCount++;
 
   }
 
-  function makeOptimalMatch(uint index) {
+//  function makeOptimalMatch(uint index) {
 
-    if(comparableUsers[index].user == msg.sender) {
-      uint sendingUserLoc = index;
-      matchmakerHelper(sendingUserLoc, 0);
-      return;
-    }
+    //uint sendingUserLoc = index;
+    //matchmakerHelper(sendingUserLoc, 0);
 
-    makeOptimalMatch(index++);
+    //makeOptimalMatch(index++);
 
-  }
 
-  function matchmakerHelper(uint sendingUserLoc, uint index) {
+ // }
+
+  uint totalMatches;
+  function matchmakerHelper(uint index) {
 
     if(index == comparableCount) return;
-    if(sendingUserLoc == index) {
-      matchmakerHelper(sendingUserLoc, index++);
-      return;
-    }
+  //  if(sendingUserLoc == index) {
+   //   matchmakerHelper(sendingUserLoc, index++);
+    //  return;
+    //}
 
-    comparableUser sendingUser = comparableUsers[sendingUserLoc];
+    comparableUser sendingUser = comparableUsers[0];
     comparableUser compareUser = comparableUsers[index];
 
     if(sendingUser.idealTime == compareUser.idealTime) {
-      addMatch(compareUser.user); 
+      //addMatch(compareUser.user); 
+      totalMatches++;
     }
 
-    matchmakerHelper(sendingUserLoc, index++);
+    matchmakerHelper(index++);
     return;
   }
 

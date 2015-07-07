@@ -11,8 +11,10 @@
   var helpers = ethlightjs.helpers;
   var password;
   var seed;
-  var registryAddr = "6e322c26237d791c52baa51fd925b6d9c298cd6e"; 
+  var registryAddr = "32ce49e9d2241caca82661ba1be922cc6c90b7aa"; 
   var nonce;
+  var userContractAddrs = new Array(5); // HACK!!
+  var totalUsers = 0;
 
   function testChooseAddr(){
     var addr= document.getElementById(document.querySelector('input[name="addr"]:checked').value).value;
@@ -29,6 +31,34 @@
     document.getElementById("bTime").value = bTime;
   }
 
+  function getTotalMatches() {
+    var txData = {nonce: nonce};
+    var fromAddr = document.getElementById("userAddr").value;
+    helpers.sendFunctionTx(registryABI, registryAddr, "matchmakerHelper", [0], fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+
+  }
+
+  function loadInUsers() {
+    i = 0;
+    while(i < 5) {
+      if(userContractAddrs[i] == null) {} else {
+        var url = "http://stablenet.blockapps.net/query/storage?address=" + userContractAddrs[i];
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false);
+        xhr.send();
+        response = JSON.parse(xhr.responseText);
+        var fromAddr = document.getElementById("userAddr").value;
+        var txData = {nonce: nonce};
+        console.log(response);
+        var args = [response[1].value, response[2].value, response[3].value, response[4].value]
+        helpers.sendFunctionTx(registryABI, registryAddr, "loadInUser", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+
+      }
+      i++;
+    }
+
+
+  }
 
   function getAddrs() {
     seed = document.getElementById("seed").value;
@@ -65,6 +95,7 @@
                                  keystore, password, function(err, contractAddr) {
       document.getElementById("userContractAddr").value = contractAddr; 
     });
+
   }
 
   function registerUserContract() {
@@ -73,6 +104,8 @@
     var txData = {nonce: nonce};
     var args = [parseInt(document.getElementById("userContractAddr").value, 16)]
     helpers.sendFunctionTx(registryABI, contractAddr, "register", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+    userContractAddrs[totalUsers] = document.getElementById("userContractAddr").value;
+    totalUsers++;
   }
 
   function initUserContract() {
@@ -84,7 +117,7 @@
     var bribePrice = parseInt(document.getElementById("t").value);
     var charity = parseInt(document.getElementById("c").value);
     var name = document.getElementById("name").value;
-    var args = [iTime, bTime, bribePrice, charity, name]
+    var args = [iTime, bTime, bribePrice, charity]
       helpers.sendFunctionTx(userContractABI, contractAddr, "init", args, fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
@@ -94,13 +127,17 @@
     helpers.sendFunctionTx(registryABI, registryAddr, "testReturn", [], fromAddr, txData, api, keystore, password, function(undefined, undefined){});
   }
 
-  var userContractCode =
- "60606040525b33600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908302179055505b60fe8061003f6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900480630eb7a276146037576035565b005b605e6004803590602001803590602001803590602001803590602001803590602001506060565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614158060bc5750813414155b1560c45760f7565b84600160005081905550836002600050819055508260036000508190555081600460005081905550806005600050819055505b505050505056"
+  function loadUpUsers() {
+    var fromAddr = document.getElementById("userAddr").value;
+    var txData = {nonce: nonce};
+    helpers.sendFunctionTx(registryABI, registryAddr, "loadUpUsers", [], fromAddr, txData, api, keystore, password, function(undefined, undefined){});
+  }
 
- var registryABI = [{"constant":false,"inputs":[{"name":"userContract","type":"address"}],"name":"register","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"sendingUserLoc","type":"uint256"},{"name":"index","type":"uint256"}],"name":"matchmakerHelper","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_user","type":"address"},{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"},{"name":"_name","type":"bytes32"}],"name":"loadInUser","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"makeOptimalMatch","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"testReturn","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"user","type":"address"}],"name":"addMatch","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
+  var userContractCode = "60606040525b33600060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908302179055505b60e38061003f6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900480637662850d146037576035565b005b6058600480359060200180359060200180359060200180359060200150605a565b005b600060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151560b45760dd565b836001600050819055508260026000508190555081600360005081905550806004600050819055505b5050505056"
 
+  var registryABI = [{"constant":false,"inputs":[{"name":"userContract","type":"address"}],"name":"register","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"}],"name":"loadInUser","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"matchmakerHelper","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"loadUpUsers","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"testReturn","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"user","type":"address"}],"name":"addMatch","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}] 
 
-  var userContractABI = [{"constant":false,"inputs":[{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"},{"name":"_name","type":"bytes32"}],"name":"init","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
+  var userContractABI = [{"constant":false,"inputs":[{"name":"_idealTime","type":"uint256"},{"name":"_bribeTime","type":"uint256"},{"name":"_bribePrice","type":"uint256"},{"name":"_charity","type":"uint256"}],"name":"init","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}]
 
 </script>
 </head>
@@ -159,10 +196,13 @@
 <h2>Charity:</h2>
 <input id='c' type="text" value="0">
 <br>
-<button onclick="checkNonce(function(err, _nonce){nonce = _nonce})" class="select">Step 0</button>
-<button onclick="pushUserContract()" class="select">Step 1</button>
-<button onclick="registerUserContract()" class="select">Step 2</button>
-<button onclick="initUserContract()" class="select">Step 3</button>
+<button onclick="checkNonce(function(err, _nonce){nonce = _nonce})" class="select">nonce</button>
+<button onclick="pushUserContract()" class="select">userContract</button>
+<button onclick="registerUserContract()" class="select">register user</button>
+<button onclick="initUserContract()" class="select">init user</button>
+<button onclick="loadUpUsers()" class="select">loadUpUsers</button>
+<button onclick="loadInUsers()" class="select">loadInUsers</button>
+<button onclick="getTotalMatches()" class="select">Get Matches</button>
 
 
 <h2>Contract address: <input type="text" id="userContractAddr" value=""></h2>
